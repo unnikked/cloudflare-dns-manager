@@ -47,7 +47,7 @@ I have not fully tested the script, I only tested it with an A record, if you fi
 
 To enjoy myself and to learn some inner aspects of bash. 
 
-# Licence
+# License
 
          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                    Version 2, December 2004
