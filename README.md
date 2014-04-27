@@ -5,7 +5,7 @@ A simple script written in bash to manage DNS Zones using Cloudflare API to make
 
 This script relies on the utility written by _stedolan_.
 
-Go [here](https://github.com/unnikked/cloudflare-dns-manager.git) and install first his utility, otherwise the script will not work.
+Go [here](https://github.com/stedolan/jq) and install first his utility, otherwise the script will not work.
 
 # How to use
 
