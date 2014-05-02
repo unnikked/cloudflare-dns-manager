@@ -1,7 +1,7 @@
 cloudflare-dns-manager
 ======================
 
-A simple script written in bash to manage DNS Zones using Cloudflare API to make a DDNS service for your machine. 
+A simple script written in bash to manage DNS Zones using Cloudflare API in order to use it as DDNS service for your machine. 
 
 This script relies on the utility written by _stedolan_.
 
@@ -13,31 +13,88 @@ First of all you need to have a domain configured with CloudFlare.
 
 Go to the [Account Section](https://www.cloudflare.com/my-account) and grab your __API KEY__.
 
-With this script you can __CREATE__, __MODIFY__ or __DELETE__ any type or DNS record (i.e _A_, _CNAME_, _MX_ etc.).
+With this script you can __CREATE__, __MODIFY__ or __DELETE__ any type or DNS record (i.e _A_, _CNAME_, _MX_ etc.) either using your public machine IP or using a specified IP.
 
 ## Syntax
 
 - _email_ : your cloudflare account email
 - _token_ : your cloudflare apy key
-- _domain_ : your domain name
 - _action_ : __CREATE__, __MODIFY__ or __DELETE__
+- _domain_ : your domain name
 - _type_ : _A_, _CNAME_, _MX_ etc.
 - _zonename_ : the value of your record (example.domain.com)
 - _servicemode_ : if you want to enable CDN feature of cloudflare (0 - disable, 1 - enabled)
+- _ip_ : (optional) if you specify an ip in the format `xxx.xxx.xxx.xxx` the script will use it, otherwise will be used your public ip. 
 
 ### Examples
 
-- `./dyndns.sh your@email.com tokenid domain.com CREATE A example.domain.com 0`
-- `./dyndns.sh your@email.com tokenid domain.com MODIFY A example.domain.com 0`
-- `./dyndns.sh your@email.com tokenid domain.com DELETE A example.domain.com 0`
-
-The script will automatically retrieve your machine IP and add to the request. 
+- `./dyndns.sh your@email.com tokenid CREATE domain.com A example.domain.com 0`
+- `./dyndns.sh your@email.com tokenid MODIFY domain.com A example.domain.com 0`
+- `./dyndns.sh your@email.com tokenid DELETE domain.com A example.domain.com 0`
 
 Setting a cron with this script will automatically refresh your machine IP if your dinamic IP changes. 
 
-`*/5 * * * * /path/to/the/script/dyndns.sh your@email.com tokenid domain.com MODIFY A example.domain.com 0`
+`*/5 * * * * /path/to/the/script/dyndns.sh your@email.com tokenid MODIFY domain.com A example.domain.com 0`
 
 Every 5 minutes this commands will fire causing an update of your A record if your local machine IP changes. 
+
+Please note that you will have to configure also your router to portforward your public ip to your subnet address.
+
+## Short hands
+
+# Cloud Flare DNS Manager
+
+I've created some bash function in order to get more "user friendly" the functions of the script. 
+
+Put those functions into your `.bash_profile` or `.bashrc`.
+
+You must install globally my script: 
+
+`cp path/to/dynds.sh /urs/bin/`
+
+or just put my repo on your environment global PATH.
+
+`CLOUDFLARE_EMAIL="your@email.com"
+CLOUDFLARE_KEY="youapikey"
+
+function dns-create() {
+    if [ $# -lt 4 ]; then
+        echo "USAGE $0 [domain] [type] [zone_name] [service_mode] (ip address)"
+        return 1;
+    fi
+
+    if [ $# -eq 5 ]; then
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "CREATE" $1 $2 $3 $4 $5
+    else
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "CREATE" $1 $2 $3 $4 
+    fi
+}
+
+function dns-modift() {
+    if [ $# -lt 4 ]; then
+        echo "USAGE $0 [domain] [type] [zone_name] [service_mode] (ip address)"
+        return 1;
+    fi
+
+    if [ $# -eq 5 ]; then
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "MODIFY" $1 $2 $3 $4 $5
+    else
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "MODIFY" $1 $2 $3 $4 
+    fi
+}
+
+function dns-delete() {
+    if [ $# -lt 4 ]; then
+        echo "USAGE $0 [domain] [type] [zone_name] [service_mode] (ip address)"
+        return 1;
+    fi
+
+    if [ $# -eq 5 ]; then
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "DELETE" $1 $2 $3 $4 $5
+    else
+        dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "DELETE" $1 $2 $3 $4 
+    fi
+}`
 
 ## Bugs
 

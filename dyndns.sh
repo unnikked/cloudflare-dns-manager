@@ -19,22 +19,29 @@
 
 # dyndns email token domain action type zone_name service_mode
 # CREATE - create a zone record
-# MODIFY - modify a zone record (use it to update)
-# DELETE - delete a zone record (to be implemented)
+# MODIFY - modify a zone record 
+# DELETE - delete a zone record 
 
-if [ $# -ne 7 ]; then
-	echo "USAGE $0 [email] [token] [domain] [action] [type] [zone_name] (service_mode)"
+if [ $# -lt 7 ]; then
+	echo "USAGE $0 [email] [token] [action] [domain] [type] [zone_name] [service_mode] (ip address)"
 	exit 1;
 fi
 
 EMAIL="$1"
 TKN="$2"
-DOMAIN="$3"
-ACTION="$4"
+ACTION="$3"
+DOMAIN="$4"
 TYPE="$5"
 NAME="$6"
 SERVICE_MODE="$7"
-IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+if [ $# -eq 8 ]; then
+	IP="$8"
+	echo "Using the ip specified: $IP"
+else
+	IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+	echo "Using your public ip: $IP"
+fi
 
 # returns status code
 function handle_response() {
