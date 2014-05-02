@@ -95,7 +95,8 @@ function dns-delete() {
     else
         dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "DELETE" $1 $2 $3 $4 
     fi
-}```
+}
+```
 
 ## Bugs
 
