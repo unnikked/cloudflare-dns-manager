@@ -42,8 +42,6 @@ Please note that you will have to configure also your router to portforward your
 
 ## Short hands
 
-# Cloud Flare DNS Manager
-
 I've created some bash function in order to get more "user friendly" the functions of the script. 
 
 Put those functions into your `.bash_profile` or `.bashrc`.
