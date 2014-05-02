@@ -54,7 +54,8 @@ You must install globally my script:
 
 or just put my repo on your environment global PATH.
 
-`CLOUDFLARE_EMAIL="your@email.com"
+```bash
+CLOUDFLARE_EMAIL="your@email.com"
 CLOUDFLARE_KEY="youapikey"
 
 function dns-create() {
@@ -94,7 +95,7 @@ function dns-delete() {
     else
         dyndns $CLOUDFLARE_EMAIL $CLOUDFLARE_KEY "DELETE" $1 $2 $3 $4 
     fi
-}`
+}```
 
 ## Bugs
 
