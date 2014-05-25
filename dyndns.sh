@@ -214,6 +214,19 @@ if [ "$ACTION" == "DELETE" ]; then
 	fi
 fi
 
+if [ "$ACTION" == "LISTALL" ]; then 
+	GETALLREC="$(get_all_rec)"
+	RES="$(handle_response "$GETALLREC")"
+	if [ "$RES" == "success" ]; then
+		ITEMS=$(echo $GETALLREC | jq '.response.recs.count')
+		let ITEMS=$ITEMS-1
+		for i in $(seq $ITEMS); do
+			echo -e "TYPE: $(echo $GETALLREC | jq ".response.recs.objs[$i].type") CONTENT: $(echo $GETALLREC | jq ".response.recs.objs[$i].content") NAME: $(echo $GETALLREC | jq ".response.recs.objs[$i].name")"
+		done
+	fi
+	exit 0
+fi
+
 echo "error: invalid action"
 exit 1
 
