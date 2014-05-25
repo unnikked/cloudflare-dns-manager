@@ -223,6 +223,9 @@ if [ "$ACTION" == "LISTALL" ]; then
 		for i in $(seq $ITEMS); do
 			echo -e "TYPE: $(echo $GETALLREC | jq ".response.recs.objs[$i].type") CONTENT: $(echo $GETALLREC | jq ".response.recs.objs[$i].content") NAME: $(echo $GETALLREC | jq ".response.recs.objs[$i].name")"
 		done
+	else 
+		echo "$RES"
+		exit 1
 	fi
 	exit 0
 fi
