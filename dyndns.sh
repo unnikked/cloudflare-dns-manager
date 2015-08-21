@@ -68,7 +68,7 @@ function get_all_rec() {
 function get_rec_id() {
 	local RES="$1"
 	local ITEMS=$(echo "$RES" | jq '.response.recs.count')
-	for i in $(seq $ITEMS); do
+	for i in $(seq 0 $(($ITEMS-1)) ); do
 		local CURRENT_DOMAIN=$(echo "$RES"| jq ".response.recs.objs[$i].zone_name")
 		if [ "${CURRENT_DOMAIN:1:-1}" == "$DOMAIN" ]; then
 			local CURRENT_TYPE=$(echo "$RES" | jq ".response.recs.objs[$i].type")
