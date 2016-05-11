@@ -1,3 +1,6 @@
+# DISCLAIMER
+This project is deprecated as Cloudflare released a python client recently and updated it's api to v4, check out [here](https://blog.cloudflare.com/python-cloudflare/).
+
 cloudflare-dns-manager
 ======================
 
